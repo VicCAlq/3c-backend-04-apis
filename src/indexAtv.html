@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+  <title>Torneio de BeyBlade</title>
+</head>
+<body>
+  <h1>Torneio de Beyblade do NAVE</h1>
+  <h3>Cadastre uma nova BeyBlade</h3>
+  <form action="/api/beyblade/cadastrar" method="GET" style="width: 450px;">
+    <label for="nome">Nome da Beyblade:</label><br>
+    <input type="text" id="nome" name="nome" required style="width: 420px"><br>
+
+    <p>Lâmina</p>
+    <section style="display: flex; flex-direction: row; gap: 10px">
+      <label> <input type="radio" name="lamina" value="dran_sword" required> Dran Sword </label><br>
+      <label> <input type="radio" name="lamina" value="wizard_arrow" required> Wizard Arrow </label><br>
+      <label> <input type="radio" name="lamina" value="knight_lance" required> Knight Lance </label><br>
+      <label> <input type="radio" name="lamina" value="leon_claw" required> Leon Claw </label><br>
+    </section><br>
+
+    <p>Catraca</p>
+    <section style="display: flex; flex-direction: row; gap: 10px">
+      <label> <input type="radio" name="catraca" value="baixa_estreita" required> Baixa e Estreita </label><br>
+      <label> <input type="radio" name="catraca" value="alta_estreita" required> Alta e Estreita </label><br>
+      <label> <input type="radio" name="catraca" value="baixa_larga" required> Baixa e Larga </label><br>
+      <label> <input type="radio" name="catraca" value="alta_larga" required> Alta e Larga </label><br>
+    </section><br>
+
+    <p>Ponta</p>
+    <section style="display: flex; flex-direction: row; gap: 10px">
+      <label> <input type="radio" name="catraca" value="agulha" required> Agulha </label><br>
+      <label> <input type="radio" name="catraca" value="redonda" required> Redonda </label><br>
+      <label> <input type="radio" name="catraca" value="achatada" required> Achatada </label><br>
+      <label> <input type="radio" name="catraca" value="alta_larga" required> Alta e Larga </label><br>
+    </section><br>
+
+    <label for="participante">Participante:</label><br>
+    <input type="text" id="participante" name="participante" required style="width: 420px"><br>
+
+    <div style="width: 100%; display: flex; flex-direction: row; justify-content: end;">
+      <button type="submit">Registrar</button>
+    </div>
+  </form>
+
+  <h3>Beyblades inscritas</h3>
+  <section id="tabela-de-beyblades"></section>
+    <table>
+      <th>
+        <tr>
+          <td> <strong>Nome</strong> </td>
+          <td> <strong>Lâmina</strong> </td>
+          <td> <strong>Catraca</strong> </td>
+          <td> <strong>Ponta</strong> </td>
+          <td> <strong>Participante</strong> </td>
+          <td> <strong>Remover</strong> </td>
+        </tr>
+      </th>
+      <tbody id="lista-de-beyblades">
+
+      </tbody>
+      
+    </table>
+  <script
+    type="text/javascript"
+  >
+    const listaDeBeyblades = document.getElementById("lista-de-beyblades")
+
+    // Este vai ser o próximo assunto de mobile :)
+    async function removerBeyblade(id) {
+      const resultado = await fetch(
+        `http://localhost:3000/api/beyblade/remover/${id}`,
+        { method: "DELETE" }
+      ).then((resposta) => {
+        if (!resposta.ok) {
+          throw new Error(`Erro na requisição! Status: ${response.status}`);
+        }
+        return resposta.json()
+      }).then((resposta) => {
+      }).catch((error) => {
+        if (error.message.startsWith("HTTP")) {
+          console.error("Erro no servidor:", error.message);
+        } else if (error.name === "AbortError") {
+          console.error("Requisição cancelada");
+        } else {
+          console.error("Falha não prevista:", error.message);
+        }
+      }).finally(() => {
+        console.log("Requisição concluída.")
+        window.location.reload()
+      })
+    }
+
+    async function lerBeyblades() {
+      const resultado = await fetch(
+        "http://localhost:3000/api/beyblade",
+        { method: "GET" }
+      ).then((resposta) => {
+        if (!resposta.ok) {
+          throw new Error(`Erro na requisição! Status: ${response.status}`);
+        }
+        return resposta.json()
+      }).then((resposta) => {
+        for (let beyblade of resposta.data) {
+          listaDeJogadores.insertAdjacentHTML('beforeend', 
+            `
+              <tr>
+                <td>${beyblade.nome}</td>
+                <td>${beyblade.lamina}</td>
+                <td>${beyblade.catraca}</td>
+                <td>${beyblade.ponta}</td>
+                <td>${beyblade.participante}</td>
+                <td>
+                  <button
+                    onclick="removerBeyblade(${beyblade.id})"
+                    type="submit"
+                  >
+                    Remover
+                  </button>
+                </td>
+              </tr>
+            `
+          )
+        }
+      }).catch((error) => {
+        if (error.message.startsWith("HTTP")) {
+          console.error("Erro no servidor:", error.message);
+        } else if (error.name === "AbortError") {
+          console.error("Requisição cancelada");
+        } else {
+          console.error("Falha não prevista:", error.message);
+        }
+      }).finally(() => {
+        console.log("Requisição concluída.")
+      })
+    }
+
+    lerBeyblades()
+  </script>
+</body>
+</html>
