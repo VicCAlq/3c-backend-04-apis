@@ -44,7 +44,7 @@ const db = new sql.Database(
 db.run(
   `CREATE TABLE IF NOT EXISTS beyblade(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT, NOT NULL UNIQUE,
+    nome TEXT NOT NULL UNIQUE,
     lamina TEXT,
     catraca TEXT,
     ponta TEXT,
@@ -54,6 +54,31 @@ db.run(
       console.log("Erro ao criar a tabela beyblade, ", erro.message)
     } else {
       console.log("Tabela criada com sucesso")
+
+      db.run(
+        `INSERT INTO beyblade (nome, lamina, catraca, ponta, participante)
+        VALUES
+        (
+            'Dran Sword',
+            'Dran Sword',
+            '3-60',
+            'Flat',
+            'João'
+        ),
+        (
+            'Hells Scythe',
+            'Hells Scythe',
+            '4-80',
+            'Ball',
+            'Maria'
+        )`, (erro) => {
+          if(erro){
+            console.log("Erro ao inserir na tabela beyblade.")
+          } else {
+            console.log("Inserido com sucesso.")
+          }
+        }
+      )
     }
   }
 )
