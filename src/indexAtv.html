@@ -105,7 +105,7 @@
         return resposta.json()
       }).then((resposta) => {
         for (let beyblade of resposta.data) {
-          listaDeJogadores.insertAdjacentHTML('beforeend', 
+          listaDeBeyblades.insertAdjacentHTML('beforeend', 
             `
               <tr>
                 <td>${beyblade.nome}</td>
