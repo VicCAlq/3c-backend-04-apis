@@ -74,6 +74,25 @@ app.get('/api/beyblade', (req,res) =>{
     })})
 
 app.get('/api/beyblade/cadastrar', (req,res) =>{
+  const{ nome, lamina, catraca, ponta, participante } = req.query
+db.all(`INSERT INTO beyblades (nome, lamina, catraca, ponta, participante VALUES(?,?,?,?,?)`,
+  [nome, lamina, catraca, ponta, participante],
+  
+  (erro, itensBeyblade) => {
+
+    if (erro) {
+      res.status(400).json({ error: erro.message });
+      return;
+    }
+    res.json({
+      message: `A beyblade ${nome}, com lamina ${lamina}, catraca ${catraca} e ponta ${ponta} do participante ${participante}
+       foi cadastrada com sucesso`,
+      data: { id: this.lastID },
+      id: this.lastID,
+      total: itensBeyblade,
+    });
+  }
+)
   
 })
 
