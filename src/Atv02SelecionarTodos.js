@@ -33,7 +33,7 @@ const db = new sql.Database(
 )
 
 db.run(
-  `CREATE TABLE IF NOT EXISTS beyblade(
+  `CREATE TABLE IF NOT EXISTS beyblades(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL UNIQUE,
     lamina TEXT,
@@ -80,17 +80,14 @@ app.get('/', (req, res) => {
 
 app.get('/api/beyblade', (req, res) => {
   db.all(
-    `SELECT * FROM beyblade`,
+    `SELECT * FROM beyblades`,
     [],
     (erro, itensTabelaBeyblade) => {
       if(erro){
         res.status(400).json({ error: erro.message })
         return
       } else {
-        res.status(200).json({
-          message: "Requisição feita com sucesso",
-          data: itensTabelaBeyblade
-        })
+        res.json({ itensTabelaBeyblade })
       }
     }
   )
