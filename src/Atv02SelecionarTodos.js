@@ -49,7 +49,7 @@ db.run(
     ponta TEXT,
     participante TEXT NOT NULL UNIQUE
   `,)
-  app.get('/', (req, res) => {
+    app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'indexAtv.html'));
   },
 )
@@ -75,14 +75,7 @@ app.get('/api/beyblade', (req, res) => {
     }
   )
 
-
-
-
   },
 )
-
-
-
-
 
 
