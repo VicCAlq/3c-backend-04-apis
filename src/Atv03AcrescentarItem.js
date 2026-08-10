@@ -1,3 +1,4 @@
+/*
   * [ATIVIDADE 3 - Acrescentar Item]
   *
   * Copie o servidor feito na atividade 02, e acrescente uma
@@ -16,6 +17,7 @@
   * Ao final deste arquivo, use "module.exports = app" para
   * exportar o objeto do servidor para os testes automatizados.
   */
+
 
 const express = require('express')
 const path = require('path')
