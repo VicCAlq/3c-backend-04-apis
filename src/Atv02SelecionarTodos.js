@@ -1,4 +1,5 @@
- * [ATIVIDADE 2 - Selecionar Todos]
+/*
+  * [ATIVIDADE 2 - Selecionar Todos]
   *
   * Copie o servidor feito na atividade 01, e acrescente uma
   * rota "GET" para o endereço "/api/beyblade" após a rota
@@ -13,6 +14,7 @@
   * Ao final deste arquivo, use "module.exports = app" para
   * exportar o objeto do servidor para os testes automatizados.
   */
+
 
 const express = require('express')
 const path = require('path')
